@@ -7,7 +7,7 @@ import java.util.Arrays;
 @Log
 public class DeterminantCalculator {
 
-    public int determinant(int[][] matrix){
+    public static int determinant(int[][] matrix){
         if(!(matrix.length == 2 &&
                 matrix[0].length == 2 &&
                 matrix[1].length == 2)){
