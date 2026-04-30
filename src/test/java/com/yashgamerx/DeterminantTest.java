@@ -23,5 +23,9 @@ public class DeterminantTest {
 
     @Test
     public void modInverseTester(){
+        Assertions.assertEquals(
+                3,
+                ModCalculator.modInverse(9, 26)
+        );
     }
 }
