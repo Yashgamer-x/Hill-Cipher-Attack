@@ -21,21 +21,32 @@ public class MatrixCalculator {
         var newMatrix = new int[matrix.length][matrix.length];
         newMatrix[0][0] = matrix[1][1];
         newMatrix[1][1] = matrix[0][0];
-        newMatrix[0][1] = matrix[1][0];
-        newMatrix[1][0] = matrix[0][1];
+        newMatrix[0][1] = ((-matrix[0][1]) % 26) + 26;
+        newMatrix[1][0] = ((-matrix[1][0]) % 26) + 26;
         return newMatrix;
     }
 
     public static int[] moddedMultiplication(
-            int[] matrix1,
-            int[][] matrix2,
+            int[] vector,
+            int[][] matrix,
             int mod)
     {
-        var newMatrix = new int[2];
-        newMatrix[0] = (matrix2[0][0]*matrix1[0] +
-                matrix2[1][0]*matrix1[1]) % mod;
-        newMatrix[1] = (matrix2[0][1]*matrix1[0] +
-                matrix2[1][1]*matrix1[1]) % mod;
-        return newMatrix;
+        var result = new int[2];
+
+        result[0] = (matrix[0][0] * vector[0] +
+                matrix[0][1] * vector[1]) % mod;
+
+        result[1] = (matrix[1][0] * vector[0] +
+                matrix[1][1] * vector[1]) % mod;
+
+        return result;
+    }
+
+    public static int[][] moddedInverseMatrix(int[][] matrix){
+        var det = DeterminantCalculator.determinant(matrix);
+        var moddedDeterminant = ModCalculator.calculate(det, 26);
+        var inverseModdedDeterminant = ModCalculator.modInverse(moddedDeterminant, 26);
+        var adjunctKeyMatrix = MatrixCalculator.adjunct(matrix);
+        return MatrixCalculator.moddedScalarMultiplication(adjunctKeyMatrix, inverseModdedDeterminant, 26);
     }
 }

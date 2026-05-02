@@ -10,11 +10,7 @@ public class HillCipher {
     }
 
     public static int[] decrypt(int[] cipherMatrix, int[][] key) {
-        var det = DeterminantCalculator.determinant(key);
-        var moddedDeterminant = ModCalculator.calculate(det, 26);
-        var inverseModdedDeterminant = ModCalculator.modInverse(moddedDeterminant, 26);
-        var adjunctKeyMatrix = MatrixCalculator.adjunct(key);
-        var inverseKeyMatrix = MatrixCalculator.moddedScalarMultiplication(adjunctKeyMatrix, inverseModdedDeterminant, 26);
+        var inverseKeyMatrix = MatrixCalculator.moddedInverseMatrix(key);
         return MatrixCalculator.moddedMultiplication(cipherMatrix, inverseKeyMatrix, 26);
     }
 
